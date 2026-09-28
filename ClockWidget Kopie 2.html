@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notion Uhr Widget</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .outer-card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 6px;
+      width: 320px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .clock-card {
+      background: #9c918c;
+      color: white;
+      border-radius: 24px;
+      width: 180px;
+      padding: 22px 14px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    .time {
+      font-size: 54px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .date-top {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .date-bottom {
+      font-size: 16px;
+      opacity: 0.95;
+    }
+  </style>
+</head>
+<body>
+  <div class="outer-card">
+    <div class="clock-card">
+      <div class="time" id="time">17:15</div>
+      <div class="date-top" id="dateTop">Montag</div>
+      <div class="date-bottom" id="dateBottom">28. September 2026</div>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+
+      const time = now.toLocaleTimeString("de-DE", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      });
+
+      const weekday = now.toLocaleDateString("de-DE", {
+        weekday: "long"
+      });
+
+      const day = now.toLocaleDateString("de-DE", {
+        day: "numeric"
+      });
+
+      const monthYear = now.toLocaleDateString("de-DE", {
+        month: "long",
+        year: "numeric"
+      });
+
+      const capitalizedWeekday =
+        weekday.charAt(0).toUpperCase() + weekday.slice(1);
+
+      document.getElementById("time").textContent = time;
+      document.getElementById("dateTop").textContent = capitalizedWeekday; 
+      document.getElementById("dateBottom").textContent = `${day}. ${monthYear}`;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
